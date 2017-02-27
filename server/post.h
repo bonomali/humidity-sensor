@@ -1,0 +1,1 @@
+void postToTwitter(char *message);

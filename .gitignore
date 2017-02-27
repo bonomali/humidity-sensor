@@ -14,10 +14,5 @@ Thumbs.db
 # Compiled Python files
 *.pyc
 
-# Compiled C++ files
-*.out
-
-# Application specific files
-venv
-node_modules
-.sass-cache
+# C Objects
+*.o

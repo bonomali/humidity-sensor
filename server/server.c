@@ -5,6 +5,7 @@
 #include <unistd.h>     // UNIX standard function definitions
 #include <fcntl.h>      // File control definitions
 #include <termios.h>    // POSIX terminal control definitions
+#include "post.h"
 
 int main(int argc, char *argv[]) {
   printf("Opening device... ");
@@ -48,14 +49,15 @@ int main(int argc, char *argv[]) {
   }
 
   int n = 0;
-  char buf [256];
+  char buf[256];
 
   printf("Starting to read data...\n");
   do {
     n = read( BLUETOOTH, &buf, sizeof buf);
 
     if (n > 0) {
-      printf("%s", buf);
+      printf("POST => %s\n", buf);
+      postToTwitter(buf);
       memset(&buf, '\0', sizeof buf);
     }
 
