@@ -8,9 +8,9 @@ SoftwareSerial BT(11, 10);
 
 void setup() {
    BT.begin(9600);
-
-   pinMode(13, OUTPUT);
-   pinMode(0,INPUT);
+//
+//   pinMode(13, OUTPUT);
+//   pinMode(0,INPUT);
 
 }
 
