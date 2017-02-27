@@ -1,24 +1,38 @@
 #include <SoftwareSerial.h>
 
-SoftwareSerial BT(11, 10); 
-// creates a "virtual" serial port/UART
-// connect BT module TX to D10
-// connect BT module RX to D11
-// connect BT Vcc to 5V, GND to GND
+/*
+	Connect BT module TX to D10
+	Connect BT module RX to D11
+	Connect BT Vcc to 5V, GND to GND
+*/
+
+SoftwareSerial BT(11, 10);
+int sensor1;
+String hash;
+String sensorData;
 
 void setup() {
    BT.begin(9600);
-//
-//   pinMode(13, OUTPUT);
-//   pinMode(0,INPUT);
-
 }
-
-int sensor1; //First humidity sensor
 
 void loop() {
   sensor1 = analogRead(0);
-  BT.println(sensor1, DEC);
+  /*
+	[
+		{
+			"name":"sensor_1",
+			"data":"300"
+		},
+		{
+			"name":"sensor_2",
+			"data":"400"
+		}
+	]
+	*/
+  sensorData = String(sensor1);
+  hash = "[{\"name\": \"sensor_1\", \"data\" :" + sensorData + " }]";
+
+  BT.println(hash);
   /*
     TODO: Set this timer to get
     data each 15 minutes.
