@@ -15,7 +15,15 @@ int postToTwitter(char *message)
 
   if(curl) {
 
-    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxxxxxx");
+    /*********
+    *
+    * This is posting to IFTTT Maker applet.
+    * Replace xxxxxxxxx in the URL bellow by
+    * your access token.
+    *
+    * Check http://ifttt.com/maker for more information
+    *********/
+    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxxxx");
     
     list = curl_slist_append(list, "Content-Type: application/json");
      

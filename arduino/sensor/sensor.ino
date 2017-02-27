@@ -8,31 +8,25 @@
 
 SoftwareSerial BT(11, 10);
 int sensor1;
-String hash;
-
-int MINUTE = 60000;
+long previousTime = 0;
+long interval = 600000; //10 minutes
+String buf;
+String sensorName= "1|";
 
 void setup() {
    BT.begin(9600);
 }
 
 void loop() {
-  sensor1 = analogRead(0);
 
-  String message="";
+  unsigned long currentTime = millis();
 
-  if(sensor1 < 300){
-    message = "Socorro! Estou com sede, me dê água por favor";
-  }else if((sensor1 >=300) && (sensor1<=700)){
-    message = "Estou bem alimentada, não precisa se preocupar!";
-  }else if(sensor1>700){
-    message = "Quer me afogar?! Estou cheia de água!";
-  }
+  if(currentTime - previousTime > interval){
 
-  if(message!=""){
-    hash = "{\"value1\" : \"" + message + "\"}";
-    BT.println(hash);
+    previousTime = currentTime;
+   
+    sensor1 = analogRead(0);
+    BT.println(sensorName + analogRead(0));
   }
   
-  delay(600000);
 }

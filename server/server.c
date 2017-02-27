@@ -7,7 +7,27 @@
 #include <termios.h>    // POSIX terminal control definitions
 #include "post.h"
 
-int main(int argc, char *argv[]) {
+
+void parseMessage(char *message){
+  char sensor[32], value[32];
+
+  strcpy(sensor, strtok(message , "|"));
+  strcpy(value, strtok(NULL, "|"));
+  char jsonToPost[200];
+  printf("\nValue = %d\n", atoi(value));
+
+  if(atoi(value) < 300)
+    strcpy(jsonToPost, "{\"value1\": \"Estou morrendo de sede! Me regue por favor!\"}");
+  else if(atoi(value) > 700)
+    strcpy(jsonToPost, "{\"value1\": \"Que me matar afogada! Estou cheia de água!\"}");
+  else if((atoi(value) >= 300) && (atoi(value) <= 700))
+    strcpy(jsonToPost, "{\"value1\": \"Estou bem por enquanto!\"}");
+
+  postToTwitter(jsonToPost);
+}
+
+
+int main() {
   printf("Opening device... ");
   int BLUETOOTH = open("/dev/tty.HC-05-DevB", O_RDONLY | O_NOCTTY | O_NONBLOCK);
   printf("opened.\n");
@@ -49,15 +69,16 @@ int main(int argc, char *argv[]) {
   }
 
   int n = 0;
-  char buf[256];
+  char buf[255];
 
   printf("Starting to read data...\n");
   do {
     n = read( BLUETOOTH, &buf, sizeof buf);
 
     if (n > 0) {
-      printf("POST => %s\n", buf);
-      postToTwitter(buf);
+      char destination[100];
+      strcpy(destination, buf);
+      parseMessage(destination);
       memset(&buf, '\0', sizeof buf);
     }
 
