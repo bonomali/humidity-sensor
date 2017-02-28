@@ -11,10 +11,11 @@ int sensor1;
 long previousTime = 0;
 long interval = 600000; //10 minutes
 String buf;
-String sensorName= "1|";
+String sensorName= "1";
 
 void setup() {
    BT.begin(9600);
+   Serial.begin(9600);
 }
 
 void loop() {
@@ -26,7 +27,8 @@ void loop() {
     previousTime = currentTime;
    
     sensor1 = analogRead(0);
-    BT.println(sensorName + analogRead(0));
+    double percentage = (sensor1/700.0)*100.0;
+    BT.println(sensorName + "|" + analogRead(0) + "|" + percentage + '|');
   }
   
 }

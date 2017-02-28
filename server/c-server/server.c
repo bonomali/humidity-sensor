@@ -5,29 +5,45 @@
 #include <unistd.h>     // UNIX standard function definitions
 #include <fcntl.h>      // File control definitions
 #include <termios.h>    // POSIX terminal control definitions
+#include <time.h>
 #include "post.h"
 
 
 void parseMessage(char *message){
-  char sensor[32], value[32];
+
+  time_t timer;
+  char currentTime[26];
+  struct tm* timeInfo;
+
+  time(&timer);
+  timeInfo = localtime(&timer);
+
+  strftime(currentTime, 26, "%Y-%m-%d %H:%M:%S", timeInfo);
+
+  char sensor[32], value[32], percentage[32];
 
   strcpy(sensor, strtok(message , "|"));
   strcpy(value, strtok(NULL, "|"));
-  char jsonToPost[200];
-  printf("\nValue = %d\n", atoi(value));
+  strcpy(percentage, strtok(NULL, "|"));
+  
+  char jsonToPost[500];
 
   if(atoi(value) < 300)
-    strcpy(jsonToPost, "{\"value1\": \"Estou morrendo de sede! Me regue por favor!\"}");
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou morrendo de sede! Me regue por favor! (Sensor: %s | Humidity: %s%c)\"}", sensor, percentage, 37);
   else if(atoi(value) > 700)
-    strcpy(jsonToPost, "{\"value1\": \"Que me matar afogada! Estou cheia de água!\"}");
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Que me matar afogada! Estou cheia de água! (Sensor: %s | Humidity: %s%c)\"}", sensor, percentage, 37);
   else if((atoi(value) >= 300) && (atoi(value) <= 700))
-    strcpy(jsonToPost, "{\"value1\": \"Estou bem por enquanto!\"}");
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou bem por enquanto! (Sensor: %s | Humidity: %s%c)\"}", sensor, percentage, 37);
 
+  printf("[%s] - %s\n", currentTime, jsonToPost);
   postToTwitter(jsonToPost);
 }
 
 
 int main() {
+  /**
+  * TODO: Clean BT memory buffer on start to prevent crash.
+  **/
   printf("Opening device... ");
   int BLUETOOTH = open("/dev/tty.HC-05-DevB", O_RDONLY | O_NOCTTY | O_NONBLOCK);
   printf("opened.\n");
@@ -82,6 +98,6 @@ int main() {
       memset(&buf, '\0', sizeof buf);
     }
 
-    usleep(100000);  /* sleep for 100 milliSeconds */
+    usleep(500000);  /* sleep for 100 milliSeconds */
   } while(1);
 }

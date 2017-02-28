@@ -23,7 +23,7 @@ int postToTwitter(char *message)
     *
     * Check http://ifttt.com/maker for more information
     *********/
-    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxxxx");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxxxxxx");
     
     list = curl_slist_append(list, "Content-Type: application/json");
      
