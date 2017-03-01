@@ -1,3 +1,6 @@
+dep-linux:
+	sudo apt-get install libcurl4-gnutls-dev
+
 server.o: server.c post.h post.c
 	gcc -c server.c
 post.o: post.h post.c
