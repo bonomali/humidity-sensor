@@ -9,6 +9,7 @@
 SoftwareSerial BT(11, 10);
 int sensor1;
 long previousTime = 0;
+//long interval = 3600000; //1 hour
 long interval = 600000; //10 minutes
 String buf;
 String sensorName= "1";

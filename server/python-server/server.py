@@ -24,7 +24,7 @@ class SensorData:
     
     # Check http://ifttt.com/maker for more information
     
-	ifttt_token = 'xxxxxxxxxxxxxxxxxxxx'
+	ifttt_token = 'lygrt0QwDHQw6b4kiSCCi'
 
 	message = ''
 
@@ -59,7 +59,7 @@ class SensorData:
 		try:
 			response = urllib2.urlopen(req, json.dumps(data))
 		except Exception as e:
-			print "Error on send data to IFTTT [{0}]".format(e.message)
+			print "[{0}] Error on send data to IFTTT [{1}]".format(st, e.message)
 
 
 if __name__ == '__main__':

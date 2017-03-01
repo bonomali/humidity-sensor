@@ -1,3 +1,12 @@
+/***************************************
+* HUMIDITY-SENSOR POST LIB
+*
+* This file was set to post data to a
+* URL.
+* 
+* Author: Adamo Morone - Mar/01/2017
+***************************************/
+
 #include <stdio.h>
 #include <curl/curl.h>
  
@@ -23,20 +32,21 @@ int postToTwitter(char *message)
     *
     * Check http://ifttt.com/maker for more information
     *********/
-    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxxxxxx");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/lygrt0QwDHQw6b4kiSCCi");
     
     list = curl_slist_append(list, "Content-Type: application/json");
      
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message);
+
+    curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
  
     /* Perform the request, res will get the return code */ 
     res = curl_easy_perform(curl);
     /* Check for errors */ 
     if(res != CURLE_OK)
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res));
+      fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
  
     /* Always cleanup */ 
     curl_easy_cleanup(curl);

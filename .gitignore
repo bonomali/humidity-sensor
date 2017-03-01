@@ -16,3 +16,6 @@ Thumbs.db
 
 # C Objects
 *.o
+
+# Log files
+*.log
