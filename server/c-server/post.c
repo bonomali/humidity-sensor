@@ -1,11 +1,26 @@
-/***************************************
-* HUMIDITY-SENSOR POST LIB
-*
-* This file was set to post data to a
-* URL.
-* 
-* Author: Adamo Morone - Mar/01/2017
-***************************************/
+/* ----------------------------------------------------------------------------
+  HUMIDITY-SENSOR POST LIB - Copyright (c) 2017 Adamo Morone
+
+  This file was set to post data to a URL.
+
+  This code is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public License
+  as published by the Free Software Foundation; either version 2.1 of
+  the License, or (at your option) any later version.
+
+  This code is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Library General Public
+  License along with this code; if not, see
+  <http://www.gnu.org/licenses/>.
+  
+  Author: Adamo Morone - Mar/01/2017
+   ----------------------------------------------------------------------------
+*/
+
 
 #include <stdio.h>
 #include <curl/curl.h>
@@ -45,15 +60,15 @@ int postToURL(char *message)
 
   if(curl) {
 
-    /*********
+    /*
     *
     * This is posting to IFTTT Maker applet.
     * Replace xxxxxxxxx in the URL bellow by
     * your access token.
     *
     * Check http://ifttt.com/maker for more information
-    *********/
-    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/lygrt0QwDHQw6b4kiSCCi");
+    */
+    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxx");
     
     list = curl_slist_append(list, "Content-Type: application/json");
      

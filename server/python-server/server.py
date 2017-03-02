@@ -24,7 +24,7 @@ class SensorData:
     
     # Check http://ifttt.com/maker for more information
     
-	ifttt_token = 'lygrt0QwDHQw6b4kiSCCi'
+	ifttt_token = 'xxxxxxxxxxxxxxxxxx'
 
 	message = ''
 

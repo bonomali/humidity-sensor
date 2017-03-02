@@ -1,5 +1,5 @@
 /*
- Humidity Sensor
+ Humidity Sensor - Copyright (c) 2017 Adamo Morone
 
  Sends a message to server using bluetooth device.
  The message is a reading from soil humidity sensor.
