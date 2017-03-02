@@ -95,7 +95,8 @@ int main() {
 
   /* Error Handling */
   if (tcgetattr(BLUETOOTH, &tty) != 0) {
-    SYS_LOG_INFO("Error on read Bluetooth.");
+    SYS_LOG_ERROR("Error on read Bluetooth.");
+    return 1;
   }
 
   /* Save old tty parameters */
@@ -122,7 +123,8 @@ int main() {
   /* Flush Port, then applies attributes */
   tcflush(BLUETOOTH, TCIFLUSH);
   if ( tcsetattr ( BLUETOOTH, TCSANOW, &tty ) != 0) {
-    SYS_LOG_INFO("Error on flush port.");
+    SYS_LOG_ERROR("Error on flush port.");
+    return 1;
   }
 
   int n = 0;
@@ -141,4 +143,6 @@ int main() {
 
     usleep(500000);  /* sleep for 100 milliSeconds */
   } while(1);
+
+  return 0;
 }
