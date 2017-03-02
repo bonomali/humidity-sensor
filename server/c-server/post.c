@@ -9,8 +9,29 @@
 
 #include <stdio.h>
 #include <curl/curl.h>
+
+/*
+ * Function: noop_cb
+ * ----------------------------
+ *   Writes the curl_easy_perform default output to nothing.
+ *
+ *   message: The message that will be printed 
+ *
+ */
+size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data) {
+  return size * nmemb;
+}
  
-int postToTwitter(char *message)
+
+/*
+ * Function: postToURL
+ * ----------------------------
+ *   Posts a json string msg to URL.
+ *
+ *   message: The message that will be posted 
+ *
+ */
+int postToURL(char *message)
 {
   CURL *curl;
   CURLcode res;
@@ -40,7 +61,7 @@ int postToTwitter(char *message)
 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message);
 
-    curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, noop_cb);
  
     /* Perform the request, res will get the return code */ 
     res = curl_easy_perform(curl);

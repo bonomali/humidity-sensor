@@ -1,1 +1,1 @@
-void postToTwitter(char *message);
+void postToURL(char *message);

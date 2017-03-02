@@ -1,3 +1,14 @@
+/***************************************
+* HUMIDITY-SENSOR SERVER
+*
+* This file was set to receive messages 
+* from bluetooth device connected to Arduino.
+*
+* The data consists on the soil humidity that
+* arduino is in.
+* 
+* Author: Adamo Morone - Mar/01/2017
+***************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>     // string function definitions
@@ -9,6 +20,22 @@
 #include "systools.h"
 
 
+/*
+ * Function: parseMessage
+ * ----------------------------
+ *   Parses the message comming from bluetooth
+ *   to three different variables:
+ *
+ *   sensor     -> Sensor number that the data is
+ *                 comming from.
+ *   value      -> The raw data from humidity sensor
+ *   percentage -> Humidity percentage according
+ *                 to previous calibration.
+ *
+ *   message: The full message that is comming
+ *            via Bluetooth.
+ *
+ */
 void parseMessage(char *message){
 
   char sensor[32], value[32], percentage[32];
@@ -28,10 +55,16 @@ void parseMessage(char *message){
 
   SYS_LOG_INFO(jsonToPost);
 
-  postToTwitter(jsonToPost);
+  postToURL(jsonToPost);
 }
 
 
+/*
+ * Function: main
+ * ----------------------------
+ *   Connects to bluetooth device via serial
+ *   port and keeps waiting for messages.
+ */
 int main() {
   /**
   * TODO: Clean BT memory buffer on start to prevent crash.
