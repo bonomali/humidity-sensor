@@ -20,5 +20,3 @@ Thumbs.db
 # Log files
 *.log
 
-#remove binary files
-server
