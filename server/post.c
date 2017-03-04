@@ -27,10 +27,8 @@
 
 /*
  * Function: noop_cb
- * ----------------------------
+ * ----------------------------./
  *   Writes the curl_easy_perform default output to nothing.
- *
- *   message: The message that will be printed 
  *
  */
 size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data) {
@@ -46,7 +44,7 @@ size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data) {
  *   message: The message that will be posted 
  *
  */
-int postToURL(char *message)
+int postToURL(char *url, char *header, char *data)
 {
   CURL *curl;
   CURLcode res;
@@ -59,27 +57,19 @@ int postToURL(char *message)
   curl = curl_easy_init();
 
   if(curl) {
-
-    /*
-    *
-    * This is posting to IFTTT Maker applet.
-    * Replace xxxxxxxxx in the URL bellow by
-    * your access token.
-    *
-    * Check http://ifttt.com/maker for more information
-    */
-    curl_easy_setopt(curl, CURLOPT_URL, "https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxx");
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     
-    list = curl_slist_append(list, "Content-Type: application/json");
+    list = curl_slist_append(list, header);
      
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
 
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, noop_cb);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &noop_cb);
  
     /* Perform the request, res will get the return code */ 
     res = curl_easy_perform(curl);
+
     /* Check for errors */ 
     if(res != CURLE_OK)
       fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -92,3 +82,38 @@ int postToURL(char *message)
 
   return 0;
 }
+
+void postToIFTTT(char *sensor, char *percentage, int sensor_val){
+    /*
+    *
+    * This is posting to IFTTT Maker applet.
+    * Replace xxxxxxxxx in the URL bellow by
+    * your access token.
+    *
+    * Check http://ifttt.com/maker for more information
+    */
+
+  char jsonToPost[1024];
+
+  if(sensor_val < 300)
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou morrendo de sede! Me regue por favor! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
+  else if(sensor_val > 700)
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Que me matar afogada! Estou cheia de água! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
+  else if((sensor_val >= 300) && (sensor_val <= 700))
+    snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou bem por enquanto! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
+  
+  postToURL("https://maker.ifttt.com/trigger/humidity_sensor/with/key/xxxxxxxxxxxx", "Content-Type: application/json", jsonToPost);
+}
+
+void postToThingSpeak(char *percentage){
+  char urlGET[100];
+  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=xxxxxxxxxxxx&field1=%s", percentage);
+  postToURL(urlGET, "Content-Type: text/plain", "");
+}
+
+void postToLoggly(char *data){
+  postToURL("http://logs-01.loggly.com/bulk/xxxxxxxxxxxxx/tag/http/", "Content-Type: text/plain", data);
+}
+
+
+

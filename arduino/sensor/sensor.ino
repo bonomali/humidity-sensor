@@ -29,9 +29,10 @@ int sensor1;
 //Both variables used to set interval between
 //each reding.
 long previousTime = 0;
-long interval = 3600000; //1 hour
-// long interval = 600000; //10 minutes
-
+// long interval = 3600000; //1 hour
+long interval = 600000; //10 minutes
+// long interval = 30000; //30 seconds
+// long interval = 1000; //1 seconds
 //Name of the sensors that will be used.
 String sensorName= "1";
 
@@ -43,6 +44,7 @@ String sensorName= "1";
 void setup() {
    //Starts reading bluetooth device.
    BT.begin(9600);
+   Serial.begin(9600);
 }
 
 void loop() {
@@ -60,15 +62,9 @@ void loop() {
     //Reads the sensor data.
     sensor1 = analogRead(0);
 
-    //Gets the percentage of humidity based
-    //on calibration that was defined by me,
-    //where 700 is the 100% wet and 0% is 
-    //completely dry.
-    double percentage = (sensor1/700.0)*100.0;
-
-
     // Sends the data over Bluetooth to server,
-    BT.println(sensorName + "|" + analogRead(0) + "|" + percentage + '|');
+    BT.print(sensorName + "|" + sensor1 + "|");
+    Serial.print(sensorName + "|" + sensor1 + "|\n");
   }
   
 }

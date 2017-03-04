@@ -26,11 +26,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include "post.h"
 
-time_t timer;
-char currentTime[26];
-struct tm* timeInfo;
-char msgLog[500];
 
 /*
  * Function: write_to_file
@@ -63,14 +61,54 @@ void write_to_file(char *message){
  */
 void outputLog(char *logType, char *message){
 
-	time(&timer);
-	timeInfo = localtime(&timer);
-	strftime(currentTime, 26, "%Y-%m-%d %H:%M:%S", timeInfo);
 
+	/* Timestamp vars */
+	time_t timer;
+	struct tm* timeInfo;
+	time(&timer);
+	char currentTime[26];
+	
+
+	/* Message log container */
+	char msgLog[1024];
+	
+	
+
+	/* Set up timestamp to use on log*/
+	timeInfo = localtime(&timer);
+	strftime(currentTime, sizeof(currentTime), "%Y-%m-%d %H:%M:%S", timeInfo);
+
+	/* Set up log message format and content*/
 	snprintf(msgLog, sizeof(msgLog), "<%s> [%s] - %s \n", logType, currentTime, message);
 
+	/**************************************
+	*
+	*
+	* Send log message to LOGGLY service.
+	*
+	*
+	***************************************/
+	postToLoggly(msgLog);
+
+
+	/**************************************
+	*
+	*
+	* Write log message to server.log file.
+	*
+	*
+	***************************************/
 	write_to_file(msgLog);
+
+	/**************************************
+	*
+	*
+	* Print log message on terminal.
+	*
+	*
+	***************************************/
 	printf("%s", msgLog);
+
 }
 
 
