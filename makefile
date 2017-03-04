@@ -23,8 +23,12 @@ post.o: $(BUILDDIR)/post.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/post.c
 regex.o: $(BUILDDIR)/regex.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/regex.c
+bluetooth.o: $(BUILDDIR)/bluetooth.* $(SYSTOOLS)
+	$(CC) $(CFLAGS) -c $(BUILDDIR)/bluetooth.c
+config.o: $(BUILDDIR)/config.* $(SYSTOOLS)
+	$(CC) $(CFLAGS) -c $(BUILDDIR)/config.c
 systools.o: $(BUILDDIR)/systools.* $(BUILDDIR)/post.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/systools.c
-server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o
+server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o $(BUILDDIR)/bluetooth.o $(BUILDDIR)/config.o
 	mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $(BUILDDIR)/*.o -o $(BINDIR)/server -lcurl
+	$(CC) $(CFLAGS) $(BUILDDIR)/*.o -o $(BINDIR)/server -lconfig -lcurl

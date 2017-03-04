@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
-  HUMIDITY-SENSOR Post Lib - Copyright (c) 2017 Adamo Morone
+  HUMIDITY-SENSOR Config Lib - Copyright (c) 2017 Adamo Morone
 
   This code is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public License
@@ -18,9 +18,21 @@
   Author: Adamo Morone - Mar/01/2017
    ----------------------------------------------------------------------------
 */
+ #include <libconfig.h>
 
-void postToURL(char *message);
-void postToIFTTT(char *sensor, char *percentage, int sensor_val);
-void postToThingSpeak(char *data);
-void postToLoggly(char *data);
-size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data);
+ void ReadConfigCFG();
+
+ extern config_t              cfg;
+ extern config_setting_t      *IFTTTsetting;
+ extern config_setting_t      *LOGGLYsetting; 
+ extern config_setting_t      *THINGSPEAKsetting;
+
+ extern const char            *IFTTTtoken;
+ extern const char            *IFTTTeventName;
+
+ extern const char            *LOGGLYtoken;
+ extern const char            *THINGSPEAKtoken;
+
+ extern int                   IFTTTactive;
+ extern int                   LOGGLYactive;
+ extern int                   THINGSPEAKactive;

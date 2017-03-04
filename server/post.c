@@ -24,7 +24,9 @@
 
 #include <stdio.h>
 #include <curl/curl.h>
+
 #include "systools.h"
+#include "config.h"
 
 /*
  * Function: noop_cb
@@ -98,6 +100,7 @@ void postToIFTTT(char *sensor, char *percentage, int sensor_val)
 
   LOG_INFO("Sending data do IFTTT [%s, %s, %d]", sensor, percentage, sensor_val);
   char jsonToPost[1024];
+  char iftttURL[500];
 
   if(sensor_val < 300)
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou morrendo de sede! Me regue por favor! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
@@ -105,21 +108,23 @@ void postToIFTTT(char *sensor, char *percentage, int sensor_val)
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Que me matar afogada! Estou cheia de água! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
   else if((sensor_val >= 300) && (sensor_val <= 700))
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou bem por enquanto! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
-  
-  postToURL("https://maker.ifttt.com/trigger/humidity_sensor/with/key/XXXXXXXXX", "Content-Type: application/json", jsonToPost);
+
+
+  snprintf(iftttURL, sizeof(iftttURL), "https://maker.ifttt.com/trigger/%s/with/key/%s", IFTTTeventName, IFTTTtoken);
+  postToURL(iftttURL, "Content-Type: application/json", jsonToPost);
 }
 
 void postToThingSpeak(char *percentage)
 {
   char urlGET[100];
   LOG_INFO("Sending data do Thing Speak [%s]", percentage);
-  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=XXXXXXX&field1=%s", percentage);
+  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=%s&field1=%s", THINGSPEAKtoken, percentage);
   postToURL(urlGET, "Content-Type: text/plain", "");
 }
 
 void postToLoggly(char *data)
 {
-  postToURL("http://logs-01.loggly.com/bulk/XXXXXXX/tag/http/", "Content-Type: text/plain", data);
+  postToURL("http://logs-01.loggly.com/bulk/f052af69-9eec-4ec9-bd57-fbfac0c8ac14/tag/http/", "Content-Type: text/plain", data);
 }
 
 
