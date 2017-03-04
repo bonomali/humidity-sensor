@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include "post.h"
+#include "config.h"
 
 
 /*
@@ -102,7 +103,8 @@ void hs_print(const char* logtype, const char* function, char* file, int line, c
 
 
 	/* Send log message to LOGGLY service. */
-	postToLoggly(msgLog);
+	if(LOGGLYactive==1)
+		postToLoggly(msgLog);
 
 	/* Write log message to server.log file. */
 	write_to_file(msgLog);

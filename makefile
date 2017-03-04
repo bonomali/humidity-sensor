@@ -27,7 +27,7 @@ bluetooth.o: $(BUILDDIR)/bluetooth.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/bluetooth.c
 config.o: $(BUILDDIR)/config.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/config.c
-systools.o: $(BUILDDIR)/systools.* $(BUILDDIR)/post.h
+systools.o: $(BUILDDIR)/systools.* $(BUILDDIR)/post.h $(BUILDDIR)/config.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/systools.c
 server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o $(BUILDDIR)/bluetooth.o $(BUILDDIR)/config.o
 	mkdir -p $(BINDIR)
