@@ -32,7 +32,8 @@
  *   Writes the curl_easy_perform default output to nothing.
  *
  */
-size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data) {
+size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data)
+{
   return size * nmemb;
 }
  
@@ -84,7 +85,8 @@ int postToURL(char *url, char *header, char *data)
   return 0;
 }
 
-void postToIFTTT(char *sensor, char *percentage, int sensor_val){
+void postToIFTTT(char *sensor, char *percentage, int sensor_val)
+{
     /*
     *
     * This is posting to IFTTT Maker applet.
@@ -104,18 +106,20 @@ void postToIFTTT(char *sensor, char *percentage, int sensor_val){
   else if((sensor_val >= 300) && (sensor_val <= 700))
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou bem por enquanto! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
   
-  postToURL("https://maker.ifttt.com/trigger/humidity_sensor/with/key/XXXXXXXXXXX", "Content-Type: application/json", jsonToPost);
+  postToURL("https://maker.ifttt.com/trigger/humidity_sensor/with/key/XXXXXXXXX", "Content-Type: application/json", jsonToPost);
 }
 
-void postToThingSpeak(char *percentage){
+void postToThingSpeak(char *percentage)
+{
   char urlGET[100];
   LOG_INFO("Sending data do Thing Speak [%s]", percentage);
-  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=XXXXXXXXXX&field1=%s", percentage);
+  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=XXXXXXX&field1=%s", percentage);
   postToURL(urlGET, "Content-Type: text/plain", "");
 }
 
-void postToLoggly(char *data){
-  postToURL("http://logs-01.loggly.com/bulk/XXXXXXXXXXX/tag/http/", "Content-Type: text/plain", data);
+void postToLoggly(char *data)
+{
+  postToURL("http://logs-01.loggly.com/bulk/XXXXXXX/tag/http/", "Content-Type: text/plain", data);
 }
 
 

@@ -51,7 +51,8 @@
  *            via BluetoothBluetooth.
  *
  */
-void parseMessage(char *message){
+void parseMessage(char *message)
+{
 
 
   char *sensor="";
@@ -67,7 +68,7 @@ void parseMessage(char *message){
   snprintf(percentage, sizeof(percentage), "%2.2f", ((sensor_val/700.0)*100.0));
   
   /* Send humidity information to IFTTT. */
-  // postToIFTTT(sensor, percentage, sensor_val);
+  postToIFTTT(sensor, percentage, sensor_val);
   
   /* Send humidity information to ThingSpeak. */
   postToThingSpeak(percentage);
@@ -82,7 +83,8 @@ void parseMessage(char *message){
  *   Connects to bluetooth device via serial
  *   port and keeps waiting for messages.
  */
-int main() {
+int main() 
+{
 
   LOG_INFO("Opening device.");
   int BLUETOOTH = open("/dev/tty.HC-05-DevB", O_RDONLY | O_NOCTTY | O_NONBLOCK);
