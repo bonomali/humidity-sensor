@@ -4,6 +4,7 @@ BUILDDIR = server
 BINDIR = bin
 CC=gcc
 CFLAGS= -g
+SYSTOOLS = $(BUILDDIR)/systools.h
 
 # Install dependencies when running on linux
 dep-linux:
@@ -18,10 +19,12 @@ clean:
 
 server.o: $(BUILDDIR)/*.c $(BUILDDIR)/*.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/server.c
-post.o: $(BUILDDIR)/post.*
+post.o: $(BUILDDIR)/post.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/post.c
+regex.o: $(BUILDDIR)/regex.* $(SYSTOOLS)
+	$(CC) $(CFLAGS) -c $(BUILDDIR)/regex.c
 systools.o: $(BUILDDIR)/systools.* $(BUILDDIR)/post.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/systools.c
-server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o
+server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o
 	mkdir -p $(BINDIR)
 	$(CC) $(CFLAGS) $(BUILDDIR)/*.o -o $(BINDIR)/server -lcurl

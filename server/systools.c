@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
-  HUMIDITY-SENSOR LOG LIB - Copyright (c) 2017 Adamo Morone
+  HUMIDITY-SENSOR SYSTOOLS - Copyright (c) 2017 Adamo Morone
 
   This file was set to provide easy log texts to terminal and also to
   server.log file.
@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdarg.h>
 #include "post.h"
 
 
@@ -38,7 +39,8 @@
  *   message: The message that will be printed 
  *
  */
-void write_to_file(char *message){
+void write_to_file(char *message)
+{
 	FILE *f = fopen("server.log", "ab+");
 	if (f == NULL)
 	{
@@ -59,95 +61,51 @@ void write_to_file(char *message){
  *   message: The message that will be printed
  *
  */
-void outputLog(char *logType, char *message){
 
+void hs_print(const char* logtype, const char* function, char* file, int line, const char* format, ...)
+{
+	va_list 		args;
+	char			buf[2048];
+	char			*p, *p2;
 
 	/* Timestamp vars */
-	time_t timer;
-	struct tm* timeInfo;
-	time(&timer);
-	char currentTime[26];
+	time_t 			timer;
+	struct tm* 		timeInfo;
+	char 			currentTime[26];
 	
+
+	time(&timer);
 
 	/* Message log container */
 	char msgLog[1024];
-	
-	
+
+	va_start(args, format);
+	vsnprintf(buf, sizeof(buf)-1, format, args);
+	va_end(args);
+
+	/* get only the file name from the source */
+	p=strrchr(file,'/');
+	p2=strrchr(file,'\\');
+	if(p||p2) {
+		file=((p>p2 ? p : p2)+1);
+	}
 
 	/* Set up timestamp to use on log*/
 	timeInfo = localtime(&timer);
+
 	strftime(currentTime, sizeof(currentTime), "%Y-%m-%d %H:%M:%S", timeInfo);
 
-	/* Set up log message format and content*/
-	snprintf(msgLog, sizeof(msgLog), "<%s> [%s] - %s \n", logType, currentTime, message);
+	snprintf(msgLog, sizeof(msgLog), "<%s> %s - %s [%s - %s:%d]\n", logtype, currentTime, buf, function, file, line);
 
-	/**************************************
-	*
-	*
-	* Send log message to LOGGLY service.
-	*
-	*
-	***************************************/
+	fprintf(stdout, "%s", msgLog);
+	fflush(stdout);
+
+
+	/* Send log message to LOGGLY service. */
 	postToLoggly(msgLog);
 
-
-	/**************************************
-	*
-	*
-	* Write log message to server.log file.
-	*
-	*
-	***************************************/
+	/* Write log message to server.log file. */
 	write_to_file(msgLog);
-
-	/**************************************
-	*
-	*
-	* Print log message on terminal.
-	*
-	*
-	***************************************/
-	printf("%s", msgLog);
-
-}
-
-
-/*
- * Function: SYS_LOG_INFO
- * ----------------------------
- *   Set the type of log that will be written to <INFO>
- *
- *   message: The message that will be printed 
- *
- */
-void SYS_LOG_INFO(char *message){
-	outputLog("INFO", message);
-}
-
-
-/*
- * Function: SYS_LOG_DEBUG
- * ----------------------------
- *   Set the type of log that will be written to <DEBUG>
- *
- *   message: The message that will be printed 
- *
- */
-void SYS_LOG_DEBUG(char *message){
-	outputLog("DEBUG", message);
-}
-
-
-/*
- * Function: SYS_LOG_ERROR
- * ----------------------------
- *   Set the type of log that will be written to <ERROR>
- *
- *   message: The message that will be printed 
- *
- */
-void SYS_LOG_ERROR(char *message){
-	outputLog("ERROR", message);
 }
 
 
