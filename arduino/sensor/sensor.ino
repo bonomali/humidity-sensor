@@ -31,8 +31,9 @@ int sensor1;
 long previousTime = 0;
 // long interval = 3600000; //1 hour
 // long interval = 600000; //10 minutes
+long interval = 60000; //1 minute
 // long interval = 30000; //30 seconds
-long interval = 10000; //10 seconds
+// long interval = 10000; //10 seconds
 // long interval = 1000; //1 seconds
 //Name of the sensors that will be used.
 String sensorName= "1";

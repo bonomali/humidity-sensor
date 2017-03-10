@@ -101,7 +101,8 @@ int main()
     char *buf = BluetoothRead();
     if(buf != NULL)
       parseMessage(buf);
-    usleep(999000);  /* sleep for 1 second */
+      sleep(21600);
+    sleep(1);  /* sleep for 1 second */
   }while(1);
 
   return 0;
