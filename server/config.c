@@ -61,6 +61,8 @@ void ReadConfigCFG()
     config_setting_lookup_string(IFTTTsetting, "token", &IFTTTtoken);
     config_setting_lookup_string(IFTTTsetting, "event_name", &IFTTTeventName);
     config_setting_lookup_int(IFTTTsetting, "active", &IFTTTactive);
+    if(IFTTTactive==1)
+      LOG_INFO("IFTTT service active [event_name: %s; token: %s;]", IFTTTeventName, IFTTTtoken);
   }
 
   /* LOGGLY Settings. */
@@ -69,6 +71,8 @@ void ReadConfigCFG()
   {
     config_setting_lookup_string(LOGGLYsetting, "token", &LOGGLYtoken);
     config_setting_lookup_int(LOGGLYsetting, "active", &LOGGLYactive);
+    if(LOGGLYactive==1)
+      LOG_INFO("LOGGLY service active [token: %s;]", LOGGLYtoken);
   }
 
   /* THINGSPEAK Settings. */
@@ -77,5 +81,7 @@ void ReadConfigCFG()
   {
     config_setting_lookup_string(THINGSPEAKsetting, "token", &THINGSPEAKtoken);
     config_setting_lookup_int(THINGSPEAKsetting, "active", &THINGSPEAKactive);
+    if(THINGSPEAKactive==1)
+      LOG_INFO("THING SPEAK service active [token: %s;]", THINGSPEAKtoken);
   }
 }

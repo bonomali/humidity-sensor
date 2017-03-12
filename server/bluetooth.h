@@ -20,3 +20,4 @@
 */
 void BluetoothInit();
 char * BluetoothRead();
+void FlushBluetooth();

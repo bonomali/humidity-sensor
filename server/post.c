@@ -76,7 +76,7 @@ int postToURL(char *url, char *header, char *data)
 
     /* Check for errors */ 
     if(res != CURLE_OK)
-      LOG_ERROR("curl_easy_perform() failed: %s", curl_easy_strerror(res));
+      LOG_ERROR("curl_easy_perform() failed: %s (%s)", url, curl_easy_strerror(res));
  
     /* Always cleanup */ 
     curl_easy_cleanup(curl);

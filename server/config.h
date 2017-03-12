@@ -22,11 +22,6 @@
 
  void ReadConfigCFG();
 
- extern config_t              cfg;
- extern config_setting_t      *IFTTTsetting;
- extern config_setting_t      *LOGGLYsetting; 
- extern config_setting_t      *THINGSPEAKsetting;
-
  extern const char            *IFTTTtoken;
  extern const char            *IFTTTeventName;
 

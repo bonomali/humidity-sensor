@@ -81,6 +81,24 @@ void parseMessage(char *message)
 
 }
 
+/*
+ * Function: printInit
+ * ----------------------------
+ *   Prints initial ascii art from file.
+ */
+void printASCIIImage()
+{
+  int c;
+  FILE *file;
+  file = fopen("server/logo.ascii", "r");
+  if (file) {
+    while ((c = getc(file)) != EOF)
+        putchar(c);
+    fclose(file);
+  }
+  puts("");
+}
+
 
 /*
  * Function: main
@@ -90,19 +108,23 @@ void parseMessage(char *message)
  */
 int main() 
 {
+  printASCIIImage();
+  LOG_INFO("Initializing Humidity Sensor server.");
 
   /** Read configuration file and set vars */
+  LOG_INFO("Reading configuration file.");
   ReadConfigCFG();
 
   /** Init bluetooth reading */
   BluetoothInit();
 
+  LOG_INFO("Start reading Bluetooth data.");
   do {
     char *buf = BluetoothRead();
     if(buf != NULL)
       parseMessage(buf);
-      sleep(21600);
-    sleep(1);  /* sleep for 1 second */
+    sleep(1);
+    //usleep(500);
   }while(1);
 
   return 0;

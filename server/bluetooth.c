@@ -30,12 +30,17 @@ int             BLUETOOTH;
 int             n = 0;
 char            buf[255];
 
+void FlushBluetooth()
+{
+  tcflush(BLUETOOTH, TCIFLUSH);
+}
+
 void BluetoothInit()
 {
   struct termios  tty;
   struct termios  tty_old;
 
-  LOG_INFO("Opening device.");
+  LOG_INFO("Opening bluetooth device.");
   BLUETOOTH = open("/dev/tty.HC-05-DevB", O_RDONLY | O_NOCTTY | O_NONBLOCK);
   memset (&tty, 0, sizeof tty);
 
@@ -67,16 +72,16 @@ void BluetoothInit()
   cfmakeraw(&tty);
 
   /* Flush Port, then applies attributes */
-  tcflush(BLUETOOTH, TCIFLUSH);
+  FlushBluetooth();
   if (tcsetattr(BLUETOOTH, TCSANOW, &tty) != 0) {
     LOG_ERROR("Error %d from tcgetattr: %s!", errno, strerror(errno));;
   }
 
 }
 
+
 char * BluetoothRead()
 {
-  
   n = read(BLUETOOTH, &buf, sizeof buf);
 
   if ((n >= 4) && (n <= 7)) {

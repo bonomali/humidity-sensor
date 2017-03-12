@@ -28,13 +28,13 @@ int sensor1;
 
 //Both variables used to set interval between
 //each reding.
-long previousTime = 0;
+// long previousTime = 0;
 // long interval = 3600000; //1 hour
 // long interval = 600000; //10 minutes
-long interval = 60000; //1 minute
+// long interval = 60000; //1 minute
 // long interval = 30000; //30 seconds
 // long interval = 10000; //10 seconds
-// long interval = 1000; //1 seconds
+// long interval = 1000; //1 second
 //Name of the sensors that will be used.
 String sensorName= "1";
 
@@ -52,14 +52,14 @@ void setup() {
 void loop() {
 
   // Gets the current time in millisecond
-  unsigned long currentTime = millis();
+  // unsigned long currentTime = millis();
 
   // Checks if the current time - time from last
   // iteration is higher to defined interval.
-  if(currentTime - previousTime > interval){
+  //if(currentTime - previousTime > 1UL*60UL*60UL*1000UL){
 
     //Saves the last iteration time.
-    previousTime = currentTime;
+    //previousTime = currentTime;
    
     //Reads the sensor data.
     sensor1 = analogRead(0);
@@ -67,6 +67,7 @@ void loop() {
     // Sends the data over Bluetooth to server,
     BT.print(sensorName + "|" + sensor1 + "|");
     Serial.print(sensorName + "|" + sensor1 + "|\n");
-  }
+    delay(6UL*60UL*60UL*1000UL);
+  //}
   
 }
