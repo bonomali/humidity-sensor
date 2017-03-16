@@ -36,6 +36,7 @@ By default, when server receives a new information from humidity-sensor, it post
 #### Instalation & Run
 ```sh
 $ cd humidity-sensor
+$ make dep-linux
 $ make server
 $ ./bin/server
 ```
@@ -47,6 +48,7 @@ If you want to change some configuration, just stop the server, change the confi
  - Create customizable messages and ranges for IFTTT integration.
  - Build harware and software for the irrigation system.
  - Integrate irrigation service on server part.
+ - Improve MAKEFILE
 
 
 **Free Software**
