@@ -9,7 +9,11 @@ Humidity sensor is a personal project to learn integration between ARDUINO and S
 The purpose of this project is to build a vegetable garden that is self-sufficient. The environment should be smart enough to know when it needs to be watered, and a watering can has to be automatically activated in case of need. For now the part of the irrigator project is still under development.
 
 ## How does it works?
-The system is divided into two parts: Humidity sensor hardware and server.
+Every six hours the sensor sends information to server, that will process that.
+The communication between then is made via Bluetooth connection.
+
+## Hardware and Software
+
 - Hardware: It is composed by an [Arduino Uno] (will be reduced to a Nano version), a humidity-sensor and a bluetooth transmitter.
 - Server: This is a `C` powered server that receives and process hardware information.
 
