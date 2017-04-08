@@ -102,11 +102,11 @@ void postToIFTTT(char *sensor, char *percentage, int sensor_val)
   char jsonToPost[1024];
   char iftttURL[500];
 
-  if(sensor_val < 300)
+  if(sensor_val < 140)
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou morrendo de sede! Me regue por favor! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
   else if(sensor_val > 700)
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Que me matar afogada! Estou cheia de água! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
-  else if((sensor_val >= 300) && (sensor_val <= 700))
+  else if((sensor_val >= 140) && (sensor_val <= 700))
     snprintf(jsonToPost, sizeof(jsonToPost), "{\"value1\": \"Estou bem por enquanto! (Sensor: %s | Umidade: %s%c)\"}", sensor, percentage, 37);
 
 
