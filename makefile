@@ -11,6 +11,7 @@ dep-linux:
 	sudo apt-get update
 	sudo apt-get upgrade
 	sudo apt-get install libcurl4-gnutls-dev
+	sudo apt-get install libconfig-dev
 
 # Clean binary files.
 clean:
