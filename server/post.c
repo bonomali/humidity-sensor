@@ -118,7 +118,7 @@ void postToThingSpeak(char *percentage)
 {
   char urlGET[100];
   LOG_INFO("Sending data do Thing Speak [%s]", percentage);
-  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?key=%s&field1=%s", THINGSPEAKtoken, percentage);
+  snprintf(urlGET, sizeof(urlGET), "https://api.thingspeak.com/update?api_key=%s&field1=%s", THINGSPEAKtoken, percentage);
   postToURL(urlGET, "Content-Type: text/plain", "");
 }
 

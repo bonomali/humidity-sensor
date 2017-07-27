@@ -121,8 +121,9 @@ int main()
   LOG_INFO("Start reading Bluetooth data.");
   do {
     char *buf = BluetoothRead();
-    if(buf != NULL)
+    if(buf != NULL){
       parseMessage(buf);
+    }
     sleep(1);
     //usleep(500);
   }while(1);
