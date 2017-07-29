@@ -20,6 +20,12 @@
   Connect BT Vcc to 5V, GND to GND
 */
 
+// Time definitions
+const long oneSecond = 1000;  // a second is a thousand milliseconds
+const long oneMinute = oneSecond * 60;
+const long oneHour   = oneMinute * 60;
+const long oneDay    = oneHour * 24;
+
 //Sets the blutooth shield.
 SoftwareSerial BT(2, 3);
 
@@ -50,8 +56,7 @@ void loop() {
     BT.print(sensorName + "|" + sensor1 + "|");
     Serial.print(sensorName + "|" + sensor1 + "|\n");
 
-    // delay(6UL*60UL*60UL*1000UL);
-    delay(10000);
-  //}
+    // Wait for the next read.
+    delay(oneHour);
   
 }
