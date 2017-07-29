@@ -2,14 +2,15 @@
 #include <ESP8266WebServer.h>
 
 ESP8266WebServer server;
-uint8_t pin_led = 16;
+uint8_t relay = 13;
 
-char* ssid = "";
-char* password = "";
+char* ssid = "Conexao Com Satanas";
+char* password = "898104redemorone";
 
 void setup()
 {
-  pinMode(pin_led, OUTPUT);
+  pinMode(relay, OUTPUT);
+  digitalWrite(relay, HIGH);
   WiFi.begin(ssid, password);
   Serial.begin(115200);
   while(WiFi.status()!=WL_CONNECTED)
@@ -22,7 +23,7 @@ void setup()
   Serial.print(WiFi.localIP());
 
   server.on("/",[](){server.send(200, "text/plain", "Hello World");});
-  server.on("/toggle", toggleLED); 
+  server.on("/water", sendWater); 
   server.begin();
 }
 
@@ -31,9 +32,11 @@ void loop()
   server.handleClient();
 }
 
-void toggleLED()
+void sendWater()
 {
-  digitalWrite(pin_led, !digitalRead(pin_led));
+  digitalWrite(relay, LOW);
   server.send(204, "");
+  delay(5000);
+  digitalWrite(relay, HIGH);
 }
 
