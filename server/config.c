@@ -30,6 +30,7 @@ config_t              cfg;
 config_setting_t      *IFTTTsetting;
 config_setting_t      *LOGGLYsetting; 
 config_setting_t      *THINGSPEAKsetting;
+config_setting_t      *WATERINGsetting;
 
 const char            *IFTTTtoken;
 const char            *IFTTTeventName;
@@ -37,9 +38,12 @@ const char            *IFTTTeventName;
 const char            *LOGGLYtoken;
 const char            *THINGSPEAKtoken;
 
+const char            *WATERINGurl;
+
 int                   IFTTTactive;
 int                   LOGGLYactive;
 int                   THINGSPEAKactive;
+int                   WATERINGactive;
 
 void ReadConfigCFG() 
 {
@@ -83,5 +87,15 @@ void ReadConfigCFG()
     config_setting_lookup_int(THINGSPEAKsetting, "active", &THINGSPEAKactive);
     if(THINGSPEAKactive==1)
       LOG_INFO("THING SPEAK service active [token: %s;]", THINGSPEAKtoken);
+  }
+
+  /* WATERING Settings. */
+  WATERINGsetting = config_lookup(&cfg, "watering");
+  if(WATERINGsetting != NULL)
+  {
+    config_setting_lookup_string(WATERINGsetting, "url", &WATERINGurl);
+    config_setting_lookup_int(WATERINGsetting, "active", &WATERINGactive);
+    if(WATERINGactive==1)
+      LOG_INFO("WATERING service active [url: %s;]", WATERINGurl);
   }
 }

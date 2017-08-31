@@ -37,6 +37,7 @@
 #include "regex.h"
 #include "bluetooth.h"
 #include "config.h"
+#include "watering.h"
 
 
 /*
@@ -78,6 +79,10 @@ void parseMessage(char *message)
   /* Send humidity information to ThingSpeak. */
   if(THINGSPEAKactive==1)
     postToThingSpeak(percentage);
+
+  /* Water plant when needed. */
+  if(WATERINGactive==1)
+    waterPlant(sensor_val, percentage);
 
 }
 
