@@ -46,7 +46,7 @@ void BluetoothInit()
 
   /* Error Handling */
   if (tcgetattr(BLUETOOTH, &tty) != 0) {
-    LOG_ERROR("Error %d from tcgetattr: %s!", errno, strerror(errno));;
+    LOG_ERROR("Error %d from tcgetattr: %s!", errno, strerror(errno));
   }
 
 
@@ -74,7 +74,7 @@ void BluetoothInit()
   /* Flush Port, then applies attributes */
   FlushBluetooth();
   if (tcsetattr(BLUETOOTH, TCSANOW, &tty) != 0) {
-    LOG_ERROR("Error %d from tcgetattr: %s!", errno, strerror(errno));;
+    LOG_ERROR("Error %d from tcgetattr: %s!", errno, strerror(errno));
   }
 
 }
