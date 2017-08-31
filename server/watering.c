@@ -35,7 +35,9 @@
  *   sends the command to the watering 
  *   service start.
  *
- *   message: The message that will be posted 
+ *   sensor_val: The value that is comming
+ *               from sensor.
+ *   percentage: Amount of humidity.
  *
  */
 void waterPlant(int sensor_val, char *percentage)
