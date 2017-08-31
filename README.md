@@ -19,7 +19,7 @@ The communication between then is made via Bluetooth connection.
 - Server: This is a `C` powered server that receives and process hardware information.
 
 ### Hardware Details
-- [Arduino Uno]
+- [Arduino Nano]
 - Humidity Sensor shield GC-58
 - Bluetooth shield HC-05
 - [NodeMcu]
