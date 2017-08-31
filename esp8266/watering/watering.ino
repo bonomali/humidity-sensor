@@ -1,3 +1,11 @@
+/*
+ Humidity Sensor - Copyright (c) 2017 Adamo Morone
+ Wait for a server message saying how many minutes
+ the water pump should pump water.
+ Created 30 Aug 2017
+ by Adamo Morone
+*/
+
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
