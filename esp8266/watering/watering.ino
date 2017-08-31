@@ -20,11 +20,13 @@ void setup()
   pinMode(relay, OUTPUT);
   digitalWrite(relay, HIGH);
 
+
   IPAddress ip(192, 168, 1, 111); // Desired IP Address
   IPAddress gateway(192, 168, 1, 1); // Gateway
   IPAddress subnet(255, 255, 255, 0); // Subnet Mask
   
   WiFi.config(ip, gateway, subnet);
+
   WiFi.begin(ssid, password);
 
   Serial.begin(115200);
@@ -39,6 +41,7 @@ void setup()
 
   server.on("/",[](){server.send(200, "text/plain", "Watering Service Online!");});
   server.on("/water", sendWater);
+
   server.begin();
 }
 
