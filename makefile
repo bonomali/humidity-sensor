@@ -1,5 +1,3 @@
-#TODO: Run dep-linux case is LINUX and lib is not installed 
-
 BUILDDIR = server
 BINDIR = bin
 CC=gcc
@@ -22,6 +20,8 @@ server.o: $(BUILDDIR)/*.c $(BUILDDIR)/*.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/server.c
 post.o: $(BUILDDIR)/post.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/post.c
+watering.o: $(BUILDDIR)/watering.* $(SYSTOOLS)
+	$(CC) $(CFLAGS) -c $(BUILDDIR)/watering.c
 regex.o: $(BUILDDIR)/regex.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/regex.c
 bluetooth.o: $(BUILDDIR)/bluetooth.* $(SYSTOOLS)
@@ -30,6 +30,6 @@ config.o: $(BUILDDIR)/config.* $(SYSTOOLS)
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/config.c
 systools.o: $(BUILDDIR)/systools.* $(BUILDDIR)/post.h $(BUILDDIR)/config.h
 	$(CC) $(CFLAGS) -c $(BUILDDIR)/systools.c
-server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o $(BUILDDIR)/bluetooth.o $(BUILDDIR)/config.o
+server: $(BUILDDIR)/server.o $(BUILDDIR)/post.o $(BUILDDIR)/watering.o $(BUILDDIR)/systools.o $(BUILDDIR)/regex.o $(BUILDDIR)/bluetooth.o $(BUILDDIR)/config.o
 	mkdir -p $(BINDIR)
 	$(CC) $(CFLAGS) $(BUILDDIR)/*.o -o $(BINDIR)/server -lconfig -lcurl

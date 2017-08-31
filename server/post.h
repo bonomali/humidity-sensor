@@ -19,7 +19,7 @@
    ----------------------------------------------------------------------------
 */
 
-void postToURL(char *message);
+void postToURL(char *url, char *header, char *data);
 void postToIFTTT(char *sensor, char *percentage, int sensor_val);
 void postToThingSpeak(char *data);
 void postToLoggly(char *data);
